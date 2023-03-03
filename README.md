@@ -12,7 +12,6 @@ An API to manage the OnDoor delivery app.
     - find products by name
     - find all products
     - find products by category
-    - find products by name
 - Cart
     - add products by ID
     - find all products
@@ -185,3 +184,113 @@ An API to manage the OnDoor delivery app.
 | 404 | there is no restaurant with the given name
 ----
 
+## Find products name
+
+'GET' ondoor/restaturant/name={find products by name}
+
+| Attribute | type | mandatory | desc
+|-------|------|:-------------:|---
+|product_name | String | yes | 
+
+```js
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Biscoito",
+      "price": 5.80
+    },
+    {
+      "id": 3,
+      "name": "Esfiha",
+      "price": 10.50
+    }
+  ]
+}
+```
+**HTTP responses**
+
+| code | desc
+|-|-
+| 200 | 
+| 404 |
+----
+
+## Find all products
+
+'GET' ondoor/restaturant/products?name={find all products}
+
+| Attribute | type | mandatory | desc
+|-------|------|:-------------:|---
+|product_name | String | yes | Will search for the all product available contains that contains at the restaurants
+
+```js
+{
+   "products": [
+      {
+         "id": "1",
+         "name": "Hambúrguer",
+         "description": "Pão, hambúrguer de carne, queijo, alface, tomate e maionese",
+         "price": 15.99,
+         "restaurant": "Burger King"
+      },
+      {
+         "id": "5",
+         "name": "Batata Frita",
+         "description": "Batatas fritas crocantes",
+         "price": 7.99,
+         "restaurant": "Burger King"
+      },
+      {
+         "id": "8",
+         "name": "Refrigerante",
+         "description": "Coca-Cola gelada",
+         "price": 4.99,
+         "restaurant": "Burger King"
+      }
+   ]
+}
+```
+**HTTP responses**
+
+| code | desc
+|-|-
+| 200 | 
+| 404 |
+----
+
+## Find products by category
+
+'GET' ondoor/restaurant/products?category={find products by category}
+
+| Attribute | type | mandatory | desc
+|-------|------|:-------------:|---
+|product_category | String | yes | Will search for the product contains that contains at the restaurants by category
+
+```js
+    [
+{
+  "category": "Entradas",
+  "products": [
+    {
+      "id": 1,
+      "name": "Bolinho de bacalhau",
+      "price": 12.50,
+      "description": "Porção com 6 bolinhos de bacalhau frito."
+    },
+    {
+      "id": 2,
+      "name": "Carpaccio de carne",
+      "price": 18.90,
+      "description": "Finas fatias de carne crua com molho de mostarda e alcaparras."
+    }
+  ]
+}
+```
+**HTTP responses**
+
+| code | desc
+|-|-
+| 200 | 
+| 404 |
+----
