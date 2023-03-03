@@ -294,3 +294,7 @@ An API to manage the OnDoor delivery app.
 | 200 | 
 | 404 |
 ----
+
+## Cart add product by id
+
+
