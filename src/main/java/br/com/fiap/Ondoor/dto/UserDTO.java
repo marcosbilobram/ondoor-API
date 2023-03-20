@@ -1,28 +1,30 @@
-package br.com.fiap.Ondoor.entities;
+package br.com.fiap.Ondoor.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+import jakarta.persistence.*;
+@MappedSuperclass
 @Entity
-public class User {
+public class UserDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String userName;
+
     private String email;
+
     private String password;
 
-    public User() {}
+    public UserDTO() {}
 
-    public User(Long id, String userName, String email, String password) {
+    public UserDTO(Long id, String userName, String email, String password) {
         this.id = id;
         this.userName = userName;
         this.email = email;
         this.password = password;
     }
+
+    // getters and setters
 
     public Long getId() {
         return id;

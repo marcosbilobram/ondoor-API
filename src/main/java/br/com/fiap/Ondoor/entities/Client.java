@@ -1,7 +1,9 @@
 package br.com.fiap.Ondoor.entities;
 
-import java.util.List;
+import jakarta.persistence.Entity;
 
+import java.util.List;
+@Entity
 public class Client extends User {
 
     private String clientName;
