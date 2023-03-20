@@ -1,46 +1,64 @@
 package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Phone;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/phone")
 public class PhoneController {
 
-    @GetMapping(value = "/phone")
-    public Phone show() { return new Phone();}
+    Logger log = LoggerFactory.getLogger(PhoneController.class);
 
-        @Autowired
-        private PhoneService phoneService;
+    List<Phone> phones = new ArrayList<>();
 
-        @GetMapping
-        public List<Phone> findAll() {
-            return phoneService.findAll();
-        }
-
-        @GetMapping("/{id}")
-        public Phone findById(@PathVariable Long id) {
-            return phoneService.findById(id);
-        }
-
-        @PostMapping
-        public Phone save(@RequestBody Phone phone) {
-            return phoneService.save(phone);
-        }
-
-        @PutMapping("/{id}")
-        public Phone update(@PathVariable Long id, @RequestBody Phone phone) {
-            Phone existingPhone = phoneService.findById(id);
-            existingPhone.setClient(phone.getClient());
-            existingPhone.setPhoneNumber(phone.getPhoneNumber());
-            return phoneService.save(existingPhone);
-        }
-
-        @DeleteMapping("/{id}")
-        public void delete(@PathVariable Long id) {
-            phoneService.delete(id);
-        }
-
+    @GetMapping
+    public ResponseEntity<List<Phone>> findAll() {
+        return ResponseEntity.ok().body(phones);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Phone> findById(@PathVariable Long id) {
+        Phone phn = phones.stream().filter(d -> d.getId().equals(id)).findFirst().get();
+
+        if (phn == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.ok().body(phn);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Void> insert(@RequestBody Phone phone) {
+        phones.add(phone);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Phone phone) {
+        log.info("alterando endereço com id " + id);
+        Phone phn = phones.stream().filter(d -> d.getId().equals(id)).findFirst().get();
+
+        if (phn == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        phones.remove(phn);
+        phone.setId(id);
+        phones.add(phone);
+
+        return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+    }
+
+    @DeleteMapping("/{id}/del")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        phones.get(Integer.parseInt(String.valueOf(id)));
+        return ResponseEntity.ok().build();
+    }
+
+}
 

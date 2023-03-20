@@ -1,45 +1,64 @@
 package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Cart;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
 public class CartController {
 
-    @GetMapping(value = "/cart")
-    public Cart show() { return new Cart();}
+    Logger log = LoggerFactory.getLogger(CartController.class);
 
-        @Autowired
-        private CartService cartService;
+    List<Cart> carts = new ArrayList<>();
 
-        @GetMapping
-        public List<Cart> findAll() {
-            return cartService.findAll();
-        }
+    @GetMapping
+    public ResponseEntity<List<Cart>> findAll() {
+        return ResponseEntity.ok().body(carts);
+    }
 
-        @GetMapping("/{id}")
-        public Cart findById(@PathVariable Long id) {
-            return cartService.findById(id);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<Cart> findById(@PathVariable Long id) {
+        Cart cart = carts.stream().filter(d -> d.getId().equals(id)).findFirst().get();
 
-        @PostMapping
-        public Cart save(@RequestBody Cart cart) {
-            return cartService.save(cart);
-        }
+        if (cart == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        @PutMapping("/{id}")
-        public Cart update(@PathVariable Long id, @RequestBody Cart cart) {
-            Cart existingCart = cartService.findById(id);
-            existingCart.setItems(cart.getItems());
-            return cartService.save(existingCart);
-        }
+        return ResponseEntity.ok().body(cart);
+    }
 
-        @DeleteMapping("/{id}")
-        public void delete(@PathVariable Long id) {
-            cartService.delete(id);
-        }
+    @PostMapping("/add")
+    public ResponseEntity<Void> insert(@RequestBody Cart cart) {
+        carts.add(cart);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Cart cart) {
+        log.info("alterando endereço com id " + id);
+        var crt = carts.stream().filter(d -> d.getId().equals(id)).findFirst();
+
+        if (crt.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        carts.remove(crt);
+        cart.setId(id);
+        carts.add(cart);
+
+        return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+    }
+
+    @DeleteMapping("/{id}/del")
+    public void delete(@PathVariable Long id) {
+        carts.get(Integer.parseInt(String.valueOf(id)));
+        ResponseEntity.ok().build();
+    }
 
     }
 

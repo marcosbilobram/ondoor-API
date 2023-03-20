@@ -1,46 +1,64 @@
 package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    @GetMapping(value = "/user")
-    public User show() { return new User();}
-        @Autowired
-        private UserService userService;
+    Logger log = LoggerFactory.getLogger(UserController.class);
 
-        @GetMapping
-        public List<User> findAll() {
-            return userService.findAll();
-        }
+    List<User> Users = new ArrayList<>();
 
-        @GetMapping("/{id}")
-        public User findById(@PathVariable Long id) {
-            return userService.findById(id);
-        }
+    @GetMapping
+    public ResponseEntity<List<User>> findAll() {
+        return ResponseEntity.ok().body(Users);
+    }
 
-        @PostMapping
-        public User save(@RequestBody User user) {
-            return userService.save(user);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        User obj = Users.stream().filter(d -> d.getId().equals(id)).findFirst().get();
 
-        @PutMapping("/{id}")
-        public User update(@PathVariable Long id, @RequestBody User user) {
-            User existingUser = userService.findById(id);
-            existingUser.setName(user.getName());
-            existingUser.setEmail(user.getEmail());
-            existingUser.setPassword(user.getPassword());
-            return userService.save(existingUser);
-        }
+        if (obj == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        @DeleteMapping("/{id}")
-        public void delete(@PathVariable Long id) {
-            userService.delete(id);
-        }
+        return ResponseEntity.ok().body(obj);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Void> insert(@RequestBody User user) {
+        Users.add(user);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody User user) {
+        log.info("alterando endereço com id " + id);
+        User obj = Users.stream().filter(d -> d.getId().equals(id)).findFirst().get();
+
+        if (obj == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        Users.remove(obj);
+        user.setId(id);
+        Users.add(user);
+
+        return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+    }
+
+    @DeleteMapping("/{id}/del")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Users.get(Integer.parseInt(String.valueOf(id)));
+        return ResponseEntity.ok().build();
+    }
 
 }
 

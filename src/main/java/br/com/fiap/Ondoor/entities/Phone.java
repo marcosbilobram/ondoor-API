@@ -3,6 +3,7 @@ package br.com.fiap.Ondoor.entities;
 //Embeddable
 public class Phone {
 
+    private Long id;
     private Integer DDD;
     private Integer DDI;
     private String number;
@@ -11,6 +12,14 @@ public class Phone {
         this.DDD = DDD;
         this.DDI = DDI;
         this.number = number;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getDDD() {
