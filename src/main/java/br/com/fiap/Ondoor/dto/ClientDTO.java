@@ -1,62 +1,28 @@
 package br.com.fiap.Ondoor.dto;
 
 import br.com.fiap.Ondoor.entities.*;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 
 import java.util.List;
-import java.util.Locale;
 
-@Entity
 public class ClientDTO extends User {
 
     private String clientName;
-
-    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private PhoneDTO phoneDTO;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private CartDTO cartDTO;
-
-    @OneToMany(mappedBy = "client")
+    private Phone phone;
+    private Cart cart;
     private List<Order> orders;
-
-    @OneToMany(mappedBy = "client")
     private List<Rating> ratings;
-    private AddressDTO addressDTO;
 
     public ClientDTO() {}
 
-    public ClientDTO(String clientName, Address address, PhoneDTO phoneDTO, CartDTO cartDTO, List<Order> orders, List<Rating> ratings, AddressDTO addressDTO) {
-        this.clientName = clientName;
-        this.address = address;
-        this.phoneDTO = phoneDTO;
-        this.cartDTO = cartDTO;
-        this.orders = orders;
-        this.ratings = ratings;
-        this.addressDTO = addressDTO;
-    }
-
-    public ClientDTO(Long id, String userName, String email, String password, String clientName, Address address, PhoneDTO phoneDTO, CartDTO cartDTO, List<Order> orders, List<Rating> ratings, AddressDTO addressDTO) {
-        super(id, userName, email, password);
-        this.clientName = clientName;
-        this.address = address;
-        this.phoneDTO = phoneDTO;
-        this.cartDTO = cartDTO;
-        this.orders = orders;
-        this.ratings = ratings;
-        this.addressDTO = addressDTO;
-    }
-
-    public ClientDTO(Client client){
-        clientName = client.getClientName();
-
-
+    public ClientDTO(Client client) {
+        this.clientName = client.getClientName();
+        this.address = client.getAddress();
+        this.phone = client.getPhone();
+        this.cart = client.getCart();
+        this.orders = client.getOrders();
+        this.ratings = client.getRatings();
+        this.address = client.getAddress();
     }
 
     // getters and setters
@@ -69,29 +35,28 @@ public class ClientDTO extends User {
         this.clientName = clientName;
     }
 
-    public AddressDTO getAddress() {
-        AddressDTO addressDTO = null;
-        return addressDTO;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddress(AddressDTO addressDTO) {
-        this.addressDTO = addressDTO;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public PhoneDTO getPhone() {
-        return phoneDTO;
+    public Phone getPhone() {
+        return phone;
     }
 
-    public void setPhone(PhoneDTO phoneDTO) {
-        this.phoneDTO = phoneDTO;
+    public void setPhone(Phone phone) {
+        this.phone = phone;
     }
 
-    public CartDTO getCart() {
-        return cartDTO;
+    public Cart getCart() {
+        return cart;
     }
 
-    public void setCart(CartDTO cartDTO) {
-        this.cartDTO = cartDTO;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public List<Order> getOrders() {

@@ -1,12 +1,8 @@
 package br.com.fiap.Ondoor.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-//Embaddable
-@Entity
+@Embeddable
 public class Address {
 
     @Id

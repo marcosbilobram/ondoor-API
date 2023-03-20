@@ -9,6 +9,7 @@ import java.util.List;
 
 @Entity
 public class Restaurant extends User{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String restaurantName;

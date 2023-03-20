@@ -1,12 +1,9 @@
 package br.com.fiap.Ondoor.dto;
 
-import jakarta.persistence.*;
-@MappedSuperclass
-@Entity
+import br.com.fiap.Ondoor.entities.User;
+
 public class UserDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String userName;
@@ -17,11 +14,11 @@ public class UserDTO {
 
     public UserDTO() {}
 
-    public UserDTO(Long id, String userName, String email, String password) {
-        this.id = id;
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
+    public UserDTO(User user) {
+        this.id = user.getId();
+        this.userName = user.getUserName();
+        this.email = user.getEmail();
+        this.password = user.getPassword();
     }
 
     // getters and setters

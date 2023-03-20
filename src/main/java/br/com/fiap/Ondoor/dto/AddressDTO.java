@@ -4,12 +4,8 @@ import br.com.fiap.Ondoor.entities.Address;
 import br.com.fiap.Ondoor.entities.Client;
 import jakarta.persistence.*;
 
-
-@Entity
 public class AddressDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String addressType;
     private String street;
@@ -21,7 +17,6 @@ public class AddressDTO {
     private String zipCode;
     private String country;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
 
     public AddressDTO(){}
@@ -37,9 +32,7 @@ public class AddressDTO {
         state = getAddressType();
         zipCode = getAddressType();
         country = getAddressType();
-
     }
-
 
     //getters and setters
 

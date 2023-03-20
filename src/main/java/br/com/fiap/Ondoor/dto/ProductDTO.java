@@ -1,13 +1,14 @@
 package br.com.fiap.Ondoor.dto;
+import br.com.fiap.Ondoor.entities.Category;
+import br.com.fiap.Ondoor.entities.Order;
 import br.com.fiap.Ondoor.entities.Product;
+import br.com.fiap.Ondoor.entities.Restaurant;
 import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity
 public class ProductDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     private String name;
@@ -20,14 +21,11 @@ public class ProductDTO {
 
     private Integer quantity = 0;
 
-    @ManyToOne
-    private CategoryDTO categoryDTO;
+    private Category categoryDTO;
 
-    @ManyToOne
-    private RestaurantDTO restaurantDTO;
+    private Restaurant restaurantDTO;
 
-    @ManyToMany(mappedBy = "products")
-    private List<OrderDTO> orders;
+    private List<Order> orders;
 
     public ProductDTO() {}
 
@@ -40,6 +38,7 @@ public class ProductDTO {
     }
 
     // getters and setters
+
     public Long getId() {
         return id;
     }
@@ -88,27 +87,27 @@ public class ProductDTO {
         this.quantity = quantity;
     }
 
-    public CategoryDTO getCategory() {
+    public Category getCategoryDTO() {
         return categoryDTO;
     }
 
-    public void setCategory(CategoryDTO categoryDTO) {
+    public void setCategoryDTO(Category categoryDTO) {
         this.categoryDTO = categoryDTO;
     }
 
-    public RestaurantDTO getRestaurant() {
+    public Restaurant getRestaurantDTO() {
         return restaurantDTO;
     }
 
-    public void setRestaurant(RestaurantDTO restaurantDTO) {
+    public void setRestaurantDTO(Restaurant restaurantDTO) {
         this.restaurantDTO = restaurantDTO;
     }
 
-    public List<OrderDTO> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<OrderDTO> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 }

@@ -6,20 +6,10 @@ import br.com.fiap.Ondoor.entities.Product;
 import jakarta.persistence.*;
 import java.util.List;
 
-@Entity
 public class CartDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
-
-    @ManyToMany
-    @JoinTable(name = "cart_product",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products;
 
     public CartDTO() {}
@@ -29,7 +19,6 @@ public class CartDTO {
         client = getClient();
         products = getProducts();
     }
-
     // getters and setters
 
     public Long getId() {

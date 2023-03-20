@@ -1,48 +1,39 @@
 package br.com.fiap.Ondoor.dto;
 
+import br.com.fiap.Ondoor.entities.*;
 import jakarta.persistence.*;
 
 import java.util.List;
 
-@Entity
 public class RestaurantDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
     private String restaurantName;
 
-    @Column
     private String logo;
 
-    @Embedded
-    private PhoneDTO phoneDTO;
+    private Phone phone;
 
-    @Embedded
-    private AddressDTO addressDTO;
+    private Address address;
 
-    @OneToMany(mappedBy = "restaurant")
-    private List<OrderDTO> orders;
+    private List<Order> orders;
 
-    @OneToMany(mappedBy = "restaurant")
-    private List<RatingDTO> ratings;
+    private List<Rating> ratings;
 
-    @OneToMany(mappedBy = "restaurant")
-    private List<ProductDTO> products;
+    private List<Product> products;
 
     public RestaurantDTO() {}
 
-    public RestaurantDTO(Long id, String restaurantName, String logo, PhoneDTO phoneDTO, AddressDTO addressDTO, List<OrderDTO> orders, List<RatingDTO> ratings, List<ProductDTO> products) {
-        this.id = id;
-        this.restaurantName = restaurantName;
-        this.logo = logo;
-        this.phoneDTO = phoneDTO;
-        this.addressDTO = addressDTO;
-        this.orders = orders;
-        this.ratings = ratings;
-        this.products = products;
+    public RestaurantDTO(Restaurant restaurant) {
+        this.id = restaurant.getId();
+        this.restaurantName = restaurant.getRestaurantName();
+        this.logo = restaurant.getLogo();
+        this.phone = restaurant.getPhone();
+        this.address = restaurant.getAddress();
+        this.orders = restaurant.getOrders();
+        this.ratings = restaurant.getRatings();
+        this.products = restaurant.getProducts();
     }
 
     // Getters e Setters
@@ -71,43 +62,44 @@ public class RestaurantDTO {
         this.logo = logo;
     }
 
-    public PhoneDTO getPhone() {
-        return phoneDTO;
+    public Phone getPhone() {
+        return phone;
     }
 
-    public void setPhone(PhoneDTO phoneDTO) {
-        this.phoneDTO = phoneDTO;
+    public void setPhone(Phone phone) {
+        this.phone = phone;
     }
 
-    public AddressDTO getAddress() {
-        return addressDTO;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setAddress(AddressDTO addressDTO) {
-        this.addressDTO = addressDTO;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
-    public List<OrderDTO> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<OrderDTO> orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 
-    public List<RatingDTO> getRatings() {
+    public List<Rating> getRatings() {
         return ratings;
     }
 
-    public void setRatings(List<RatingDTO> ratings) {
+    public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
     }
 
-    public List<ProductDTO> getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<ProductDTO> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
+
 }

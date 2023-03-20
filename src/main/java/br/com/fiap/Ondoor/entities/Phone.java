@@ -1,12 +1,21 @@
 package br.com.fiap.Ondoor.entities;
 
-//Embeddable
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Embeddable
 public class Phone {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer DDD;
     private Integer DDI;
     private String number;
+
+    public Phone(){}
 
     public Phone(Integer DDD, Integer DDI, String number) {
         this.DDD = DDD;

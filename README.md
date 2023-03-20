@@ -8,10 +8,10 @@ An API to manage the OnDoor delivery app.
     - [sign in](#customer-sign-in)
     - [find all orders by customer ID](#find-all-customer-orders-by-customer-id)
 - Restaurant
-    - [find by name](#find-restaurantDTO-by-name)
-    - [find all productDTOS](#find-all-productDTOS-in-restaurantDTO)
-    - [find productDTOS by name](#find-all-productDTOS-from-the-restaurantDTO-by-their-names)
-    - [find productDTOS by categoryDTO](#find-restaurantDTO-productDTOS-by-categoryDTO)
+    - [find by name](#find-restaurant-by-name)
+    - [find all productDTOS](#find-all-productDTOS-in-restaurant)
+    - [find productDTOS by name](#find-all-productDTOS-from-the-restaurant-by-their-names)
+    - [find productDTOS by categoryDTO](#find-restaurant-productDTOS-by-categoryDTO)
 - Cart
     - [add productDTOS by ID](#add-productDTOS-in-customer-cartDTO-by-productDTOS-id)
     - [find all productDTOS](#find-all-productDTOS-in-customer-cartDTO)
@@ -125,7 +125,7 @@ An API to manage the OnDoor delivery app.
 
 # Restaurant Service
 
-## Find restaurantDTO by name
+## Find restaurant by name
 
 'GET' ondoor/restaturant/name={restaurant_name}
 
@@ -179,17 +179,17 @@ An API to manage the OnDoor delivery app.
 
 | code | desc
 |-|-
-| 200 | restaurantDTO data returned
-| 404 | there is no restaurantDTO with the given name
+| 200 | restaurant data returned
+| 404 | there is no restaurant with the given name
 ----
 
-## Find all productDTOS from the restaurantDTO by their names
+## Find all productDTOS from the restaurant by their names
 
-'GET' ondoor/restaurantDTO/{restaurant_id}/productDTOS/name="product_name"
+'GET' ondoor/restaurant/{restaurant_id}/productDTOS/name="product_name"
 
 | Attribute | type | mandatory | desc
 |-------|------|:-------------:|---
-|product_name | String | yes | The request will search for the productDTOS in the restaurantDTO that contains the name
+|product_name | String | yes | The request will search for the productDTOS in the restaurant that contains the name
 
 **Response body example**
 
@@ -259,11 +259,11 @@ An API to manage the OnDoor delivery app.
 
 | code | desc
 |-|-
-| 200 | restaurantDTO data returned
-| 404 | there is no restaurantDTO with the given name or there is no productDTOS with the gived name
+| 200 | restaurant data returned
+| 404 | there is no restaurant with the given name or there is no productDTOS with the gived name
 ----
 
-## Find all productDTOS in restaurantDTO
+## Find all productDTOS in restaurant
 
 'GET' ondoor/restaturant/{restaurant_id}/prods
 
@@ -271,7 +271,7 @@ An API to manage the OnDoor delivery app.
 
 ```js 
 {
-  "restaurantDTO": {
+  "restaurant": {
     "name": "Restaurante do Zé",
     "productDTOS": [
       {
@@ -303,13 +303,13 @@ An API to manage the OnDoor delivery app.
 
 | code | desc
 |-|-
-| 200 | Data from restaurantDTO returned
-| 404 | There is no productDTOS in restaurantDTO
+| 200 | Data from restaurant returned
+| 404 | There is no productDTOS in restaurant
 ----
 
-## Find restaurantDTO productDTOS by categoryDTO
+## Find restaurant productDTOS by categoryDTO
 
-'GET' ondoor/restaurantDTO/productDTOS?categoryDTO={find productDTOS by categoryDTO}
+'GET' ondoor/restaurant/productDTOS?categoryDTO={find productDTOS by categoryDTO}
 
 | Attribute | type | mandatory | desc
 |-------|------|:-------------:|---

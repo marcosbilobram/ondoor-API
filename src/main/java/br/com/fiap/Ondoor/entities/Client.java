@@ -1,13 +1,16 @@
 package br.com.fiap.Ondoor.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.util.List;
+
 @Entity
 public class Client extends User {
 
     private String clientName;
+    @Embedded
     private Address address;
+    @Embedded
     private Phone phone;
 
     private Cart cart;
@@ -50,5 +53,29 @@ public class Client extends User {
 
     public void setPhone(Phone phone) {
         this.phone = phone;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 }

@@ -1,56 +1,48 @@
 package br.com.fiap.Ondoor.dto;
 
-import jakarta.persistence.*;
+import br.com.fiap.Ondoor.entities.*;
 
 import java.util.Calendar;
 import java.util.List;
 
-@Entity
 public class OrderDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private Double totalValue;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Calendar date;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<ProductDTO> productDTOS;
+    private List<Product> products;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private AddressDTO deliveryAddressDTO;
+    private Address deliveryAddress;
 
-    @ManyToOne
-    private ClientDTO clientDTO;
+    private Client client;
 
-    @ManyToOne
-    private RestaurantDTO restaurantDTO;
+    private Restaurant restaurant;
 
     private String status;
 
     public OrderDTO() {}
 
-    public OrderDTO(Integer id, Double totalValue, Calendar date, List<ProductDTO> productDTOS, AddressDTO deliveryAddressDTO, ClientDTO clientDTO, RestaurantDTO restaurantDTO, String status) {
-        this.id = id;
-        this.totalValue = totalValue;
-        this.date = date;
-        this.productDTOS = productDTOS;
-        this.deliveryAddressDTO = deliveryAddressDTO;
-        this.clientDTO = clientDTO;
-        this.restaurantDTO = restaurantDTO;
-        this.status = status;
+    public OrderDTO(Order order) {
+        this.id = order.getId();
+        this.totalValue = order.getTotalValue();
+        this.date = order.getDate();
+        this.products = order.getProducts();
+        this.deliveryAddress = order.getDeliveryAddress();
+        this.client = order.getClient();
+        this.restaurant = order.getRestaurant();
+        this.status = order.getStatus();
     }
 
     // getters and setters
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -70,36 +62,36 @@ public class OrderDTO {
         this.date = date;
     }
 
-    public List<ProductDTO> getProducts() {
-        return productDTOS;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProducts(List<ProductDTO> productDTOS) {
-        this.productDTOS = productDTOS;
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
-    public AddressDTO getDeliveryAddress() {
-        return deliveryAddressDTO;
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
     }
 
-    public void setDeliveryAddress(AddressDTO deliveryAddressDTO) {
-        this.deliveryAddressDTO = deliveryAddressDTO;
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
-    public ClientDTO getClient() {
-        return clientDTO;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClient(ClientDTO clientDTO) {
-        this.clientDTO = clientDTO;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
-    public RestaurantDTO getRestaurant() {
-        return restaurantDTO;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestaurant(RestaurantDTO restaurantDTO) {
-        this.restaurantDTO = restaurantDTO;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public String getStatus() {
