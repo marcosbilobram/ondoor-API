@@ -4,6 +4,8 @@ import br.com.fiap.Ondoor.entities.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -12,7 +14,7 @@ public class OrderController {
     public Order show() { return new Order();}
 
         @Autowired
-        private OrderService orderService;
+        private Order order;
 
         @GetMapping
         public List<Order> findAll() {
@@ -26,7 +28,7 @@ public class OrderController {
 
         @PostMapping
         public Order save(@RequestBody Order order) {
-            return orderService.save(order);
+            return order.save(order);
         }
 
         @PutMapping("/{id}")

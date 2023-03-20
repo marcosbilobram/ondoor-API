@@ -1,13 +1,12 @@
-package br.com.fiap.Ondoor.entities;
+package br.com.fiap.Ondoor.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import br.com.fiap.Ondoor.entities.Address;
+import br.com.fiap.Ondoor.entities.Client;
+import jakarta.persistence.*;
 
-//Embaddable
+
 @Entity
-public class Address {
+public class AddressDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,24 +21,27 @@ public class Address {
     private String zipCode;
     private String country;
 
+    @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
 
-    public Address(){}
+    public AddressDTO(){}
 
-    public Address(Long id, String addressType, String street, int number, String complement,
-                   String neighborhood, String city, String state, String zipCode, String country, Client client) {
-        this.id = id;
-        this.addressType = addressType;
-        this.street = street;
-        this.number = number;
-        this.complement = complement;
-        this.neighborhood = neighborhood;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.country = country;
-        this.client = client;
+    public AddressDTO(Address address){
+        id = address.getId();
+        addressType = getAddressType();
+        street = getAddressType();
+        number = getNumber();
+        complement = getAddressType();
+        neighborhood = getAddressType();
+        city = getAddressType();
+        state = getAddressType();
+        zipCode = getAddressType();
+        country = getAddressType();
+
     }
+
+
+    //getters and setters
 
     public Long getId() {
         return id;
@@ -121,11 +123,11 @@ public class Address {
         this.country = country;
     }
 
-    public Client getCustomer() {
+    public Client getClient() {
         return client;
     }
 
-    public void setCustomer(Client client) {
+    public void setClient(Client client) {
         this.client = client;
     }
 }

@@ -1,43 +1,45 @@
-package br.com.fiap.Ondoor.entities;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package br.com.fiap.Ondoor.dto;
+import br.com.fiap.Ondoor.entities.Product;
+import jakarta.persistence.*;
 
 import java.util.List;
-@Entity
-public class Product {
 
+@Entity
+public class ProductDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String description;
+
     private String image;
+
     private Double pricePerUnit;
+
     private Integer quantity = 0;
 
-    private Category category;
-    private Restaurant restaurant;
-    private List<Order> orders;
+    @ManyToOne
+    private CategoryDTO categoryDTO;
 
-    public Product(){}
+    @ManyToOne
+    private RestaurantDTO restaurantDTO;
 
-    public Product(Long id, String name, String description, String image,
-                   Double pricePerUnit, Integer quantity, Category category,
-                   Restaurant restaurant, List<Order> orders) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.pricePerUnit = pricePerUnit;
-        this.quantity = quantity;
-        this.category = category;
-        this.restaurant = restaurant;
-        this.orders = orders;
+    @ManyToMany(mappedBy = "products")
+    private List<OrderDTO> orders;
+
+    public ProductDTO() {}
+
+    public ProductDTO(Product product){
+        id = product.getId();
+        name = product.getName();
+        description = product.getDescription();
+        pricePerUnit = product.getPricePerUnit();
+        quantity = product.getQuantity();
     }
 
+    // getters and setters
     public Long getId() {
         return id;
     }
@@ -86,27 +88,27 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Category getCategory() {
-        return category;
+    public CategoryDTO getCategory() {
+        return categoryDTO;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(CategoryDTO categoryDTO) {
+        this.categoryDTO = categoryDTO;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public RestaurantDTO getRestaurant() {
+        return restaurantDTO;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurant(RestaurantDTO restaurantDTO) {
+        this.restaurantDTO = restaurantDTO;
     }
 
-    public List<Order> getOrders() {
+    public List<OrderDTO> getOrders() {
         return orders;
     }
 
-    public void setOrders(List<Order> orders) {
+    public void setOrders(List<OrderDTO> orders) {
         this.orders = orders;
     }
 }

@@ -1,38 +1,46 @@
-package br.com.fiap.Ondoor.entities;
+package br.com.fiap.Ondoor.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Calendar;
 import java.util.List;
 
-//Embaddable
 @Entity
-public class Rating {
+public class RatingDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Integer stars;
+
     private String comment;
+
+    @ElementCollection
     private List<String> answers;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar date;
-    private Client client;
-    private Restaurant restaurant;
 
-    public Rating(){}
+    @ManyToOne
+    private ClientDTO clientDTO;
 
-    public Rating(Long id, Integer stars, String comment, List<String> answers, Calendar date, Client client, Restaurant restaurant) {
+    @ManyToOne
+    private RestaurantDTO restaurantDTO;
+
+    public RatingDTO() {}
+
+    public RatingDTO(Long id, Integer stars, String comment, List<String> answers, Calendar date, ClientDTO clientDTO, RestaurantDTO restaurantDTO) {
         this.id = id;
         this.stars = stars;
         this.comment = comment;
         this.answers = answers;
         this.date = date;
-        this.client = client;
-        this.restaurant = restaurant;
+        this.clientDTO = clientDTO;
+        this.restaurantDTO = restaurantDTO;
     }
+
+    // getters and setters
 
     public Long getId() {
         return id;
@@ -74,19 +82,19 @@ public class Rating {
         this.date = date;
     }
 
-    public Client getClient() {
-        return client;
+    public ClientDTO getClient() {
+        return clientDTO;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(ClientDTO clientDTO) {
+        this.clientDTO = clientDTO;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public RestaurantDTO getRestaurant() {
+        return restaurantDTO;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setRestaurant(RestaurantDTO restaurantDTO) {
+        this.restaurantDTO = restaurantDTO;
     }
 }

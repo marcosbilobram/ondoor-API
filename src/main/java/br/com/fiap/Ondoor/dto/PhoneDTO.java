@@ -1,25 +1,41 @@
-package br.com.fiap.Ondoor.entities;
+package br.com.fiap.Ondoor.dto;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-//Embeddable
+
 @Entity
-public class Phone {
+public class PhoneDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Integer DDD;
+
     private Integer DDI;
+
     private String number;
 
-    public Phone(Integer DDD, Integer DDI, String number) {
+    public PhoneDTO() {}
+
+    public PhoneDTO(Long id, Integer DDD, Integer DDI, String number) {
+        this.id = id;
         this.DDD = DDD;
         this.DDI = DDI;
         this.number = number;
+    }
+
+    // getters and setters
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Integer getDDD() {

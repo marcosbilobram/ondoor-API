@@ -4,6 +4,8 @@ import br.com.fiap.Ondoor.entities.Phone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/phone")
 public class PhoneController {
@@ -12,7 +14,7 @@ public class PhoneController {
     public Phone show() { return new Phone();}
 
         @Autowired
-        private PhoneService phoneService;
+        private Phone phone;
 
         @GetMapping
         public List<Phone> findAll() {
