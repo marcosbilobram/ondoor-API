@@ -1,8 +1,10 @@
 package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Restaurant;
+import br.com.fiap.Ondoor.repositories.RestaurantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,48 +18,50 @@ public class RestaurantController {
 
     Logger log = LoggerFactory.getLogger(RestaurantController.class);
 
-    List<Restaurant> restaurants = new ArrayList<>();
+    @Autowired
+    RestaurantRepository repo;
 
     @GetMapping
     public ResponseEntity<List<Restaurant>> findAll() {
-        return ResponseEntity.ok().body(restaurants);
+        return ResponseEntity.ok().body(repo.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Restaurant> findById(@PathVariable Long id) {
-        Restaurant obj = restaurants.stream().filter(d -> d.getId().equals(id)).findFirst().get();
 
-        if (obj == null)
+        Restaurant ads = repo.findById(id).get();
+
+        if (ads == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(ads);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Restaurant restaurant) {
-        restaurants.add(restaurant);
+    public ResponseEntity<Void> insert(@RequestBody Restaurant Restaurant) {
+        repo.save(Restaurant);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Restaurant Restaurant) {
         log.info("alterando endereço com id " + id);
-        Restaurant obj = restaurants.stream().filter(d -> d.getId().equals(id)).findFirst().get();
+        var ads = repo.findById(id);
 
-        if (obj == null)
+        if (ads.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        restaurants.remove(obj);
-        restaurant.setId(id);
-        restaurants.add(restaurant);
+        repo.delete(ads.get());
+        Restaurant.setId(id);
+        repo.save(Restaurant);
 
         return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
     }
 
     @DeleteMapping("/{id}/del")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        restaurants.get(Integer.parseInt(String.valueOf(id)));
-        return ResponseEntity.ok().build();
+        repo.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

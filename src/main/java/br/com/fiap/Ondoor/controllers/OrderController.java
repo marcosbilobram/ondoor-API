@@ -1,8 +1,11 @@
 package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Order;
+import br.com.fiap.Ondoor.entities.Order;
+import br.com.fiap.Ondoor.repositories.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,45 +21,49 @@ public class OrderController {
 
     List<Order> orders = new ArrayList<>();
 
+    @Autowired
+    OrderRepository repo;
+
     @GetMapping
     public ResponseEntity<List<Order>> findAll() {
-        return ResponseEntity.ok().body(orders);
+        return ResponseEntity.ok().body(repo.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Order> findById(@PathVariable Long id) {
-        Order order = orders.stream().filter(d -> d.getId().equals(id)).findFirst().get();
 
-        if (order == null)
+        Order ads = repo.findById(id).get();
+
+        if (ads == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        return ResponseEntity.ok().body(order);
+        return ResponseEntity.ok().body(ads);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Order order) {
-        orders.add(order);
+    public ResponseEntity<Void> insert(@RequestBody Order Order) {
+        repo.save(Order);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Order order) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Order Order) {
         log.info("alterando endereço com id " + id);
-        Order ord = orders.stream().filter(d -> d.getId().equals(id)).findFirst().get();
+        var ads = repo.findById(id);
 
-        if (ord == null)
+        if (ads.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        orders.remove(ord);
-        order.setId(id);
-        orders.add(order);
+        repo.delete(ads.get());
+        Order.setId(id);
+        repo.save(Order);
 
         return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
     }
 
     @DeleteMapping("/{id}/del")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        orders.get(Integer.parseInt(String.valueOf(id)));
-        return ResponseEntity.ok().build();
+        repo.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

@@ -1,13 +1,14 @@
 package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Rating;
+import br.com.fiap.Ondoor.repositories.RatingRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -16,48 +17,50 @@ public class RatingController {
 
     Logger log = LoggerFactory.getLogger(RatingController.class);
 
-    List<Rating> ratings = new ArrayList<>();
+    @Autowired
+    RatingRepository repo;
 
     @GetMapping
     public ResponseEntity<List<Rating>> findAll() {
-        return ResponseEntity.ok().body(ratings);
+        return ResponseEntity.ok().body(repo.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Rating> findById(@PathVariable Long id) {
-        Rating obj = ratings.stream().filter(d -> d.getId().equals(id)).findFirst().get();
 
-        if (obj == null)
+        Rating ads = repo.findById(id).get();
+
+        if (ads == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(ads);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Rating rating) {
-        ratings.add(rating);
+    public ResponseEntity<Void> insert(@RequestBody Rating Rating) {
+        repo.save(Rating);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Rating rating) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Rating Rating) {
         log.info("alterando endereço com id " + id);
-        Rating obj = ratings.stream().filter(d -> d.getId().equals(id)).findFirst().get();
+        var ads = repo.findById(id);
 
-        if (obj == null)
+        if (ads.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        ratings.remove(obj);
-        rating.setId(id);
-        ratings.add(rating);
+        repo.delete(ads.get());
+        Rating.setId(id);
+        repo.save(Rating);
 
         return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
     }
 
     @DeleteMapping("/{id}/del")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        ratings.get(Integer.parseInt(String.valueOf(id)));
-        return ResponseEntity.ok().build();
+        repo.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
