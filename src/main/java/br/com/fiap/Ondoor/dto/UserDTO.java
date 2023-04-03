@@ -1,7 +1,15 @@
 package br.com.fiap.Ondoor.dto;
 
 import br.com.fiap.Ondoor.entities.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class UserDTO {
 
     private Long id;
@@ -12,8 +20,6 @@ public class UserDTO {
 
     private String password;
 
-    public UserDTO() {}
-
     public UserDTO(User user) {
         this.id = user.getId();
         this.userName = user.getUserName();
@@ -21,37 +27,4 @@ public class UserDTO {
         this.password = user.getPassword();
     }
 
-    // getters and setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

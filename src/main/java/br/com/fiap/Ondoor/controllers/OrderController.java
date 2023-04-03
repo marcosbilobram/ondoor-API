@@ -3,6 +3,7 @@ package br.com.fiap.Ondoor.controllers;
 import br.com.fiap.Ondoor.entities.Order;
 import br.com.fiap.Ondoor.entities.Order;
 import br.com.fiap.Ondoor.repositories.OrderRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,13 +42,13 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Order Order) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid Order Order) {
         repo.save(Order);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Order Order) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Order Order) {
         log.info("alterando endereço com id " + id);
         var ads = repo.findById(id);
 

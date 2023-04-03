@@ -2,6 +2,7 @@ package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Restaurant;
 import br.com.fiap.Ondoor.repositories.RestaurantRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,13 +39,13 @@ public class RestaurantController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Restaurant Restaurant) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid Restaurant Restaurant) {
         repo.save(Restaurant);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Restaurant Restaurant) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Restaurant Restaurant) {
         log.info("alterando endereço com id " + id);
         var ads = repo.findById(id);
 

@@ -2,6 +2,7 @@ package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Product;
 import br.com.fiap.Ondoor.repositories.ProductRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Product product) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid Product product) {
         repo.save(product);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Product product) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Product product) {
         log.info("alterando endereço com id " + id);
         var ads = repo.findById(id);
 

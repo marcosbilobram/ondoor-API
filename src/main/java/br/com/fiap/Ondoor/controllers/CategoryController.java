@@ -2,6 +2,7 @@ package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Category;
 import br.com.fiap.Ondoor.repositories.CategoryRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Category Category) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid Category Category) {
         repo.save(Category);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Category Category) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Category Category) {
         log.info("alterando endereço com id " + id);
         var ads = repo.findById(id);
 

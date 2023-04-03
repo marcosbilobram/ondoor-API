@@ -2,6 +2,7 @@ package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Cart;
 import br.com.fiap.Ondoor.repositories.CartRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class CartController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Cart Cart) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid Cart Cart) {
         repo.save(Cart);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Cart Cart) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Cart Cart) {
         log.info("alterando endereço com id " + id);
         var ads = repo.findById(id);
 

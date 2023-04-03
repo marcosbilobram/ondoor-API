@@ -3,10 +3,18 @@ package br.com.fiap.Ondoor.dto;
 import br.com.fiap.Ondoor.entities.Client;
 import br.com.fiap.Ondoor.entities.Rating;
 import br.com.fiap.Ondoor.entities.Restaurant;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Calendar;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class RatingDTO {
 
     private Long id;
@@ -23,8 +31,6 @@ public class RatingDTO {
 
     private Restaurant restaurant;
 
-    public RatingDTO() {}
-
     public RatingDTO(Rating rating) {
         this.id = rating.getId();
         this.stars = rating.getStars();
@@ -33,63 +39,5 @@ public class RatingDTO {
         this.date = rating.getDate();
         this.client = rating.getClient();
         this.restaurant = rating.getRestaurant();
-    }
-
-    // getters and setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getStars() {
-        return stars;
-    }
-
-    public void setStars(Integer stars) {
-        this.stars = stars;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public List<String> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<String> answers) {
-        this.answers = answers;
-    }
-
-    public Calendar getDate() {
-        return date;
-    }
-
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
     }
 }

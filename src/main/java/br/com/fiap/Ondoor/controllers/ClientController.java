@@ -2,6 +2,7 @@ package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Client;
 import br.com.fiap.Ondoor.repositories.ClientRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class ClientController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Client Client) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid Client Client) {
         repo.save(Client);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Client Client) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Client Client) {
         log.info("alterando endereço com id " + id);
         var ads = repo.findById(id);
 

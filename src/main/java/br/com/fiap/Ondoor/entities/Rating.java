@@ -1,15 +1,21 @@
 package br.com.fiap.Ondoor.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Calendar;
 import java.util.List;
 
-//Embaddable
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class Rating {
 
     @Id
@@ -18,75 +24,15 @@ public class Rating {
     private Integer stars;
     private String comment;
     private List<String> answers;
+
+    @CreationTimestamp
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Calendar date;
+
+    @ManyToOne
     private Client client;
+
+    @ManyToOne
     private Restaurant restaurant;
 
-    public Rating(){}
-
-    public Rating(Long id, Integer stars, String comment, List<String> answers, Calendar date, Client client, Restaurant restaurant) {
-        this.id = id;
-        this.stars = stars;
-        this.comment = comment;
-        this.answers = answers;
-        this.date = date;
-        this.client = client;
-        this.restaurant = restaurant;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getStars() {
-        return stars;
-    }
-
-    public void setStars(Integer stars) {
-        this.stars = stars;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public List<String> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<String> answers) {
-        this.answers = answers;
-    }
-
-    public Calendar getDate() {
-        return date;
-    }
-
-    public void setDate(Calendar date) {
-        this.date = date;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
 }

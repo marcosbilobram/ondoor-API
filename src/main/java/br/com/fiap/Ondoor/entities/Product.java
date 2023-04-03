@@ -1,112 +1,41 @@
 package br.com.fiap.Ondoor.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, length = 25)
     private String name;
+    @Column(nullable = false)
     private String description;
     private String image;
+    @Column(scale = 3, precision = 2, nullable = false)
     private Double pricePerUnit;
+    @Column(nullable = false)
     private Integer quantity = 0;
 
-    private Category category;
+    @ManyToMany
+    private List<Category> category;
+
+    @ManyToOne
     private Restaurant restaurant;
+
+    @ManyToMany
     private List<Order> orders;
 
-    public Product(){}
-
-    public Product(Long id, String name, String description, String image,
-                   Double pricePerUnit, Integer quantity, Category category,
-                   Restaurant restaurant, List<Order> orders) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.pricePerUnit = pricePerUnit;
-        this.quantity = quantity;
-        this.category = category;
-        this.restaurant = restaurant;
-        this.orders = orders;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Double getPricePerUnit() {
-        return pricePerUnit;
-    }
-
-    public void setPricePerUnit(Double pricePerUnit) {
-        this.pricePerUnit = pricePerUnit;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 }

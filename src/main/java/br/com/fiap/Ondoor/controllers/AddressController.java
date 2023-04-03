@@ -2,6 +2,7 @@ package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Address;
 import br.com.fiap.Ondoor.repositories.AddressRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class AddressController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Address address) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid Address address) {
         repo.save(address);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Address address) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Address address) {
         log.info("alterando endereço com id " + id);
         var ads = repo.findById(id);
 

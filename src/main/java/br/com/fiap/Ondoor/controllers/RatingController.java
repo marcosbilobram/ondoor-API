@@ -2,6 +2,7 @@ package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Rating;
 import br.com.fiap.Ondoor.repositories.RatingRepository;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,13 @@ public class RatingController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Void> insert(@RequestBody Rating Rating) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid Rating Rating) {
         repo.save(Rating);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Rating Rating) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Rating Rating) {
         log.info("alterando endereço com id " + id);
         var ads = repo.findById(id);
 
