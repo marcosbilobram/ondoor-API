@@ -51,7 +51,7 @@ An API to manage the OnDoor delivery app.
 
 ### Find all customer orders by customer ID
 
-'GET' /ondoor/api/customer/{customer_id}
+`GET` /ondoor/api/customer/{customer_id}
 
 **Response body example**
 
