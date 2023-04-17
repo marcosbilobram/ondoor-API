@@ -23,9 +23,9 @@ An API to manage the OnDoor delivery app.
 
 # Customer Service
 
-## Customer sign in
+### Customer sign in
 
-'POST' ondoor/login
+`POST` /ondoor/api/login
 
 | Attribute | type | mandatory | desc
 |-------|------|:-------------:|---
@@ -49,9 +49,9 @@ An API to manage the OnDoor delivery app.
 | 400 | invalid data
 ----
 
-## Find all customer orders by customer ID
+### Find all customer orders by customer ID
 
-'GET' ondoor/customer/{customer_id}/orders
+'GET' /ondoor/api/customer/{customer_id}
 
 **Response body example**
 
@@ -125,9 +125,9 @@ An API to manage the OnDoor delivery app.
 
 # Restaurant Service
 
-## Find restaurant by name
+### Find restaurant by name
 
-'GET' ondoor/restaturant/name={restaurant_name}
+`GET` /ondoor/restaturant/name={restaurant_name}
 
 | Attribute | type | mandatory | desc
 |-------|------|:-------------:|---
@@ -183,9 +183,9 @@ An API to manage the OnDoor delivery app.
 | 404 | there is no restaurant with the given name
 ----
 
-## Find all products from the restaurant by their names
+### Find all products from the restaurant by their names
 
-'GET' ondoor/restaurant/{restaurant_id}/products/name="product_name"
+`GET` /ondoor/restaurant/{restaurant_id}/products/name="product_name"
 
 | Attribute | type | mandatory | desc
 |-------|------|:-------------:|---
@@ -263,9 +263,9 @@ An API to manage the OnDoor delivery app.
 | 404 | there is no restaurant with the given name or there is no products with the gived name
 ----
 
-## Find all products in restaurant
+### Find all products in restaurant
 
-'GET' ondoor/restaturant/{restaurant_id}/prods
+`GET` /ondoor/restaturant/{restaurant_id}/prods
 
 **Response body example**
 
@@ -307,9 +307,9 @@ An API to manage the OnDoor delivery app.
 | 404 | There is no products in restaurant
 ----
 
-## Find restaurant products by category
+### Find restaurant products by category
 
-'GET' ondoor/restaurant/products?category={find products by category}
+`GET` /ondoor/restaurant/products?category={find products by category}
 
 | Attribute | type | mandatory | desc
 |-------|------|:-------------:|---
@@ -349,9 +349,9 @@ An API to manage the OnDoor delivery app.
 
 # Cart Service
 
-## Add products in customer cart by products id
+### Add products in customer cart by products id
 
-'POST' ondoor/cart/{customer_id}/products/add
+`POST` /ondoor/cart/{customer_id}/products/add
 
 | Attribute | type | mandatory | desc
 |-------|------|:-------------:|---
@@ -378,9 +378,9 @@ An API to manage the OnDoor delivery app.
 | 400 | Wrong data format
 ----
 
-## Find all products in customer cart
+### Find all products in customer cart
 
-'GET' ondoor/cart/{customer_id}/products
+`GET` /ondoor/cart/{customer_id}/products
 
 **Response body example**
 
@@ -417,9 +417,9 @@ An API to manage the OnDoor delivery app.
 | 404 | 
 ----
 
-## Delete products by id in customer cart
+### Delete products by id in customer cart
 
-'DELETE' ondoor/cart/{customer_id}/products/{product_id}/del
+`DELETE` /ondoor/cart/{customer_id}/products/{product_id}/del
 
 **HTTP responses**
 
@@ -431,9 +431,9 @@ An API to manage the OnDoor delivery app.
 
 # Order Service
 
-## Create order
+### Create order
 
-'POST' ondoor/order/{customer_id}
+`POST` /ondoor/order/{customer_id}
 
 **Request body example**
 
