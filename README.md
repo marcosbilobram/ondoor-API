@@ -355,7 +355,7 @@ An API to manage the OnDoor delivery app.
 
 | Attribute | type | mandatory | desc
 |-------|------|:-------------:|---
-|product_ids | List | yes | Will find the products in data bank and add they in the customer cart
+|product_ids | List | yes | Will find the products in database and add they in the customer cart
 
 ## Request body example
 
