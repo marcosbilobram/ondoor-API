@@ -12,7 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
+//@Builder
+@Table(name = "tb_ond_client")
 public class Client extends User {
 
     @Column(length = 25, nullable = false)
@@ -25,8 +26,13 @@ public class Client extends User {
     @Embedded
     @Column(nullable = false)
     private Phone phone;
+
+    @Transient//To decide
     private Cart cart;
 
+    @OneToMany(mappedBy = "client", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     private List<Rating> ratings;
 }

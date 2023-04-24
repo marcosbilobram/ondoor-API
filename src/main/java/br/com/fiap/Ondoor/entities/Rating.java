@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
+@Table(name = "tb_ond_rating")
 public class Rating {
 
     @Id
@@ -29,10 +30,10 @@ public class Rating {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Calendar date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false)
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
     private Restaurant restaurant;
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
+@Table(name = "tb_ond_product")
 public class Product {
 
     @Id
@@ -29,13 +30,13 @@ public class Product {
     @Column(nullable = false)
     private Integer quantity = 0;
 
-    @ManyToMany
-    private List<Category> category;
+    @ManyToMany(mappedBy = "productList", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    private List<Category> categories;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, optional = false)
     private Restaurant restaurant;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "products")
     private List<Order> orders;
 
 }

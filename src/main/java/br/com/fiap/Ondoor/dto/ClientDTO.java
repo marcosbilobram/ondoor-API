@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
+//@Builder
 public class ClientDTO extends User {
 
     private String clientName;

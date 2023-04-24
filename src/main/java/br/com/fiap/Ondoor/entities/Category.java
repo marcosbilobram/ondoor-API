@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
+@Table(name = "tb_ond_category")
 public class Category {
 
     @Id
@@ -21,7 +22,17 @@ public class Category {
     private String name;
     private String description;
 
-    @ManyToMany
+    @JoinTable(name = "tb_mkt_prod_categ",
+            joinColumns =
+            @JoinColumn(
+                    name = "prod_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "categ_id",
+                    referencedColumnName = "id"
+            )
+    )
     private List<Product> productList;
 
 }
