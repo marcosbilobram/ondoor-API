@@ -1,39 +1,24 @@
 package br.com.fiap.Ondoor.entities;
 
-//Embeddable
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class Phone {
 
-    private Integer DDD;
+    @Column(nullable = false, length = 3)
     private Integer DDI;
-    private String number;
 
-    public Phone(Integer DDD, Integer DDI, String number) {
-        this.DDD = DDD;
-        this.DDI = DDI;
-        this.number = number;
-    }
+    @Column(nullable = false, length = 2)
+    private Integer DDD;
 
-    public Integer getDDD() {
-        return DDD;
-    }
-
-    public void setDDD(Integer DDD) {
-        this.DDD = DDD;
-    }
-
-    public Integer getDDI() {
-        return DDI;
-    }
-
-    public void setDDI(Integer DDI) {
-        this.DDI = DDI;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
+    @Column(nullable = false, length = 12)
+    private String phoneNumber;
 }

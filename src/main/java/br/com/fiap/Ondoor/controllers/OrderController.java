@@ -1,46 +1,70 @@
 package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Order;
+import br.com.fiap.Ondoor.entities.Order;
+import br.com.fiap.Ondoor.repositories.OrderRepository;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/order")
 public class OrderController {
 
-    @GetMapping(value = "/order")
-    public Order show() { return new Order();}
+    Logger log = LoggerFactory.getLogger(OrderController.class);
 
-        @Autowired
-        private OrderService orderService;
+    List<Order> orders = new ArrayList<>();
 
-        @GetMapping
-        public List<Order> findAll() {
-            return orderService.findAll();
-        }
+    @Autowired
+    OrderRepository repo;
 
-        @GetMapping("/{id}")
-        public Order findById(@PathVariable Long id) {
-            return orderService.findById(id);
-        }
+    @GetMapping
+    public ResponseEntity<List<Order>> findAll() {
+        return ResponseEntity.ok().body(repo.findAll());
+    }
 
-        @PostMapping
-        public Order save(@RequestBody Order order) {
-            return orderService.save(order);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<Order> findById(@PathVariable Long id) {
 
-        @PutMapping("/{id}")
-        public Order update(@PathVariable Long id, @RequestBody Order order) {
-            Order existingOrder = orderService.findById(id);
-            existingOrder.setClient(order.getClient());
-            existingOrder.setProducts(order.getProducts());
-            return orderService.save(existingOrder);
-        }
+        Order ads = repo.findById(id).get();
 
-        @DeleteMapping("/{id}")
-        public void delete(@PathVariable Long id) {
-            orderService.delete(id);
-        }
+        if (ads == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
+        return ResponseEntity.ok().body(ads);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Void> insert(@RequestBody @Valid Order Order) {
+        repo.save(Order);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid Order Order) {
+        log.info("alterando endereço com id " + id);
+        var ads = repo.findById(id);
+
+        if (ads.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        repo.delete(ads.get());
+        Order.setId(id);
+        repo.save(Order);
+
+        return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+    }
+
+    @DeleteMapping("/{id}/del")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        repo.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }

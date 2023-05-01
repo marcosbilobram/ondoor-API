@@ -1,85 +1,40 @@
 package br.com.fiap.Ondoor.entities;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+//@Builder
+@Table(name = "tb_ond_restaurant")
 public class Restaurant extends User{
 
     private String restaurantName;
+
     private String logo;
+
+    @Embedded
     private Phone phone;
+
+    @Embedded
     private Address address;
+
+    @OneToMany
+    @JoinColumn(name = "restaurant_id")
     private List<Order> orders;
+
+    @OneToMany
+    @JoinColumn(name = "restaurant_id")
     private List<Rating> ratings;
+
+    @OneToMany
+    @JoinColumn(name = "restaurant_id")
     private List<Product> products;
-
-    public Restaurant(){}
-
-    public Restaurant(Long id, String userName, String email, String password,
-                      String restaurantName, String logo, Phone phone, Address address,
-                      List<Order> orders, List<Rating> ratings, List<Product> products) {
-        super(id, userName, email, password);
-        this.restaurantName = restaurantName;
-        this.logo = logo;
-        this.phone = phone;
-        this.address = address;
-        this.orders = orders;
-        this.ratings = ratings;
-        this.products = products;
-    }
-
-    public String getRestaurantName() {
-        return restaurantName;
-    }
-
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
-
-    public Phone getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Phone phone) {
-        this.phone = phone;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    public List<Rating> getRatings() {
-        return ratings;
-    }
-
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 }

@@ -1,43 +1,20 @@
 package br.com.fiap.Ondoor.entities;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.List;
 
-//Embaddable
+@Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Cart {
 
-    private Long id;
-    private Client client;
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Product> products;
 
-    public Cart(){}
-
-    public Cart(Long id, Client client, List<Product> products) {
-        this.id = id;
-        this.client = client;
-        this.products = products;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Client getCustomer() {
-        return client;
-    }
-
-    public void setCustomer(Client client) {
-        this.client = client;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 }
