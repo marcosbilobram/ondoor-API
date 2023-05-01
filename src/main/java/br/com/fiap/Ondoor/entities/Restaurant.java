@@ -16,8 +16,6 @@ import java.util.List;
 @Table(name = "tb_ond_restaurant")
 public class Restaurant extends User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String restaurantName;
 
     private String logo;
@@ -28,12 +26,15 @@ public class Restaurant extends User{
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany
+    @JoinColumn(name = "restaurant_id")
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany
+    @JoinColumn(name = "restaurant_id")
     private List<Rating> ratings;
 
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany
+    @JoinColumn(name = "restaurant_id")
     private List<Product> products;
 }

@@ -22,7 +22,8 @@ public class Category {
     private String name;
     private String description;
 
-    @JoinTable(name = "tb_mkt_prod_categ",
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tb_prod_categ",
             joinColumns =
             @JoinColumn(
                     name = "prod_id",

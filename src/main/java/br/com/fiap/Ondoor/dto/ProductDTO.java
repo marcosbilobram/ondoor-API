@@ -3,7 +3,6 @@ import br.com.fiap.Ondoor.entities.Category;
 import br.com.fiap.Ondoor.entities.Order;
 import br.com.fiap.Ondoor.entities.Product;
 import br.com.fiap.Ondoor.entities.Restaurant;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -34,8 +34,8 @@ public class Order {
 
     private String status;
 
-    @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
     private Client client;
 
     @ManyToMany
@@ -47,16 +47,8 @@ public class Order {
     @Embedded
     private Address deliveryAddress;
 
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    public Order(Double totalValue, Calendar date, String status, Client client, List<Product> products, Restaurant restaurant) {
-        this.totalValue = totalValue;
-        this.date = date;
-        this.status = status;
-        this.client = client;
-        this.products = products;
-        this.deliveryAddress = client.getAddress();
-        this.restaurant = restaurant;
-    }
 }

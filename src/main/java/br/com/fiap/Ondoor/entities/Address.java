@@ -10,12 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 public class Address {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(length = 20)
     private String addressType;
@@ -24,7 +19,7 @@ public class Address {
     private String street;
 
     @Column(length = 6, nullable = false)
-    private int number;
+    private int addressNumber;
 
     @Column(length = 25)
     private String complement;

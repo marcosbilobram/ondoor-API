@@ -20,14 +20,12 @@ public class Client extends User {
     private String clientName;
 
     @Embedded
-    @Column(nullable = false)
     private Address address;
 
     @Embedded
-    @Column(nullable = false)
     private Phone phone;
 
-    @Transient//To decide
+    @Embedded
     private Cart cart;
 
     @OneToMany(mappedBy = "client", cascade = CascadeType.DETACH, fetch = FetchType.EAGER)

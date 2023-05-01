@@ -8,13 +8,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor
+/*@NoArgsConstructor
 @AllArgsConstructor
 @Data
-//@Builder
+//@Builder*/
 public class ClientDTO extends User {
 
-    private String clientName;
+    /*private String clientName;
     private Address address;
     private Phone phone;
     private Cart cart;
@@ -29,5 +29,5 @@ public class ClientDTO extends User {
         this.orders = client.getOrders();
         this.ratings = client.getRatings();
         this.address = client.getAddress();
-    }
+    }*/
 }

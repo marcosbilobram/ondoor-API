@@ -8,13 +8,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
 
-@NoArgsConstructor
+/*@NoArgsConstructor
 @AllArgsConstructor
 @Data
-//@Builder
+//@Builder*/
 public class RestaurantDTO {
 
-    private Long id;
+    /*private Long id;
 
     private String restaurantName;
 
@@ -39,5 +39,5 @@ public class RestaurantDTO {
         this.orders = restaurant.getOrders();
         this.ratings = restaurant.getRatings();
         this.products = restaurant.getProducts();
-    }
+    }*/
 }

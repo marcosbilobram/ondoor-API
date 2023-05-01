@@ -8,16 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Entity
+@Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 public class Cart {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Product> products;

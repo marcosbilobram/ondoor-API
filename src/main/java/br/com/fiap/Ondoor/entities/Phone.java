@@ -13,10 +13,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Phone {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false, length = 3)
     private Integer DDI;
 
@@ -24,5 +20,5 @@ public class Phone {
     private Integer DDD;
 
     @Column(nullable = false, length = 12)
-    private String number;
+    private String phoneNumber;
 }

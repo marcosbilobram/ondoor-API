@@ -22,11 +22,15 @@ public class Product {
 
     @Column(nullable = false, length = 25)
     private String name;
+
     @Column(nullable = false)
     private String description;
+
     private String image;
-    @Column(scale = 3, precision = 2, nullable = false)
+
+    @Column(nullable = false)
     private Double pricePerUnit;
+
     @Column(nullable = false)
     private Integer quantity = 0;
 
@@ -34,6 +38,7 @@ public class Product {
     private List<Category> categories;
 
     @ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
     @ManyToMany(mappedBy = "products")

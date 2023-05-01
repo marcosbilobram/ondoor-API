@@ -6,13 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+/*@NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
+@Builder*/
 public class UserDTO {
 
-    private Long id;
+    /*private Long id;
 
     private String userName;
 
@@ -25,6 +25,6 @@ public class UserDTO {
         this.userName = user.getUserName();
         this.email = user.getEmail();
         this.password = user.getPassword();
-    }
+    }*/
 
 }

@@ -33,7 +33,8 @@ public class Rating {
     @ManyToOne(cascade = CascadeType.DETACH, optional = false)
     private Client client;
 
-    @ManyToOne(cascade = CascadeType.DETACH, optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.DETACH,  fetch = FetchType.EAGER)
+    @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
 }
