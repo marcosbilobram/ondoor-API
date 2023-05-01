@@ -5,32 +5,32 @@ An API to manage the OnDoor delivery app.
 # Endpoints
 
 - Customer
-    - [sign in](#customer-sign-in)
-    - [find all orders by customer ID](#find-all-customer-orders-by-customer-id)
+  - [sign in](#customer-sign-in)
+  - [find all orders by customer ID](#find-all-customer-orders-by-customer-id)
 - Restaurant
-    - [find by name](#find-restaurant-by-name)
-    - [find all productDTOS](#find-all-productDTOS-in-restaurant)
-    - [find productDTOS by name](#find-all-productDTOS-from-the-restaurant-by-their-names)
-    - [find productDTOS by categoryDTO](#find-restaurant-productDTOS-by-categoryDTO)
+  - [find by name](#find-restaurant-by-name)
+  - [find all products](#find-all-products-in-restaurant)
+  - [find products by name](#find-all-products-from-the-restaurant-by-their-names)
+  - [find products by category](#find-restaurant-products-by-category)
 - Cart
-    - [add productDTOS by ID](#add-productDTOS-in-customer-cartDTO-by-productDTOS-id)
-    - [find all productDTOS](#find-all-productDTOS-in-customer-cartDTO)
-    - [delete productDTOS by id](#delete-productDTOS-by-id-in-customer-cartDTO)
+  - [add products by ID](#add-products-in-customer-cart-by-products-id)
+  - [find all products](#find-all-products-in-customer-cart)
+  - [delete products by id](#delete-products-by-id-in-customer-cart)
 - Order
-    - [create](#create-order)
+  - [create](#create-order)
 
 ----
 
 # Customer Service
 
-## Customer sign in
+### Customer sign in
 
-'POST' ondoor/login
+`POST` /ondoor/api/login
 
-| Attribute | type | mandatory | desc
-|-------|------|:-------------:|---
-|email | String | yes | The customer email should be in the email paramethers
-|password | String | yes | The customer password should have less than 11 characters
+| Attribute | type   | mandatory | desc                                                      |
+|-----------|--------|:---------:|-----------------------------------------------------------|
+| email     | String |    yes    | The customer email should be in the email paramethers     |
+| password  | String |    yes    | The customer password should have less than 11 characters |
 
 **Request body example**
 
@@ -43,15 +43,16 @@ An API to manage the OnDoor delivery app.
 
 **HTTP responses**
 
-| code | desc
-|-|-
-| 202 | Sign in sucessfully
-| 400 | invalid data
+| code | desc                |
+|------|---------------------|
+| 202  | Sign in sucessfully |
+| 400  | invalid data        |
+
 ----
 
-## Find all customer orders by customer ID
+### Find all customer orders by customer ID
 
-'GET' ondoor/customer/{customer_id}/orders
+`GET` /ondoor/api/customer/{customer_id}
 
 **Response body example**
 
@@ -116,22 +117,22 @@ An API to manage the OnDoor delivery app.
 
 **HTTP responses**
 
-| code | desc
-|-|-
-| 200 | order data returned
-| 404 | there is no order with the given customer id
+| code | desc                                         |
+|------|----------------------------------------------|
+| 200  | order data returned                          |
+| 404  | there is no order with the given customer id |
 
 ----
 
 # Restaurant Service
 
-## Find restaurant by name
+### Find restaurant by name
 
-'GET' ondoor/restaturant/name={restaurant_name}
+`GET` /ondoor/restaturant/name={restaurant_name}
 
-| Attribute | type | mandatory | desc
-|-------|------|:-------------:|---
-|restaurant_name | String | yes | The request will search for the restaurants that contains the name
+| Attribute       | type   | mandatory | desc                                                               |
+|-----------------|--------|:---------:|--------------------------------------------------------------------|
+| restaurant_name | String |    yes    | The request will search for the restaurants that contains the name |
 
 **Response body example**
 
@@ -177,19 +178,20 @@ An API to manage the OnDoor delivery app.
 ```
 **HTTP responses**
 
-| code | desc
-|-|-
-| 200 | restaurant data returned
-| 404 | there is no restaurant with the given name
+| code | desc                                       |
+|------|--------------------------------------------|
+| 200  | restaurant data returned                   |
+| 404  | there is no restaurant with the given name |
+
 ----
 
-## Find all productDTOS from the restaurant by their names
+### Find all products from the restaurant by their names
 
-'GET' ondoor/restaurant/{restaurant_id}/productDTOS/name="product_name"
+`GET` /ondoor/restaurant/{restaurant_id}/products/name="product_name"
 
-| Attribute | type | mandatory | desc
-|-------|------|:-------------:|---
-|product_name | String | yes | The request will search for the productDTOS in the restaurant that contains the name
+| Attribute    | type   | mandatory | desc                                                                              |
+|--------------|--------|:---------:|-----------------------------------------------------------------------------------|
+| product_name | String |    yes    | The request will search for the products in the restaurant that contains the name |
 
 **Response body example**
 
@@ -198,10 +200,10 @@ An API to manage the OnDoor delivery app.
   "restaurants": [
     {
       "name": "Burger Joint",
-      "addressDTO": "123 Main St",
+      "address": "123 Main St",
       "image": "https://example.com/images/burger_joint.jpg",
       "rating": 4.5,
-      "productDTOS": [
+      "products": [
         {
           "name": "Classic Burger",
           "price": 9.99,
@@ -216,10 +218,10 @@ An API to manage the OnDoor delivery app.
     },
     {
       "name": "Pizza Palace",
-      "addressDTO": "456 Elm St",
+      "address": "456 Elm St",
       "image": "https://example.com/images/pizza_palace.jpg",
       "rating": 4.2,
-      "productDTOS": [
+      "products": [
         {
           "name": "Pepperoni Pizza",
           "price": 12.99,
@@ -234,10 +236,10 @@ An API to manage the OnDoor delivery app.
     },
     {
       "name": "Sushi House",
-      "addressDTO": "789 Oak St",
+      "address": "789 Oak St",
       "image": "https://example.com/images/sushi_house.jpg",
       "rating": 4.8,
-      "productDTOS": [
+      "products": [
         {
           "name": "California Roll",
           "price": 8.99,
@@ -257,15 +259,16 @@ An API to manage the OnDoor delivery app.
 
 **HTTP responses**
 
-| code | desc
-|-|-
-| 200 | restaurant data returned
-| 404 | there is no restaurant with the given name or there is no productDTOS with the gived name
+| code | desc                                                                                   |
+|------|----------------------------------------------------------------------------------------|
+| 200  | restaurant data returned                                                               |
+| 404  | there is no restaurant with the given name or there is no products with the gived name |
+
 ----
 
-## Find all productDTOS in restaurant
+### Find all products in restaurant
 
-'GET' ondoor/restaturant/{restaurant_id}/prods
+`GET` /ondoor/restaturant/{restaurant_id}/prods
 
 **Response body example**
 
@@ -273,26 +276,26 @@ An API to manage the OnDoor delivery app.
 {
   "restaurant": {
     "name": "Restaurante do Zé",
-    "productDTOS": [
+    "products": [
       {
         "name": "Pizza de Calabresa",
         "price": 30.00,
-        "categoryDTO": "Pizzas"
+        "category": "Pizzas"
       },
       {
         "name": "Lasanha Bolonhesa",
         "price": 25.00,
-        "categoryDTO": "Massas"
+        "category": "Massas"
       },
       {
         "name": "Churrasco Misto",
         "price": 40.00,
-        "categoryDTO": "Carnes"
+        "category": "Carnes"
       },
       {
         "name": "Salada Caesar",
         "price": 20.00,
-        "categoryDTO": "Saladas"
+        "category": "Saladas"
       }
     ]
   }
@@ -301,27 +304,28 @@ An API to manage the OnDoor delivery app.
 
 **HTTP responses**
 
-| code | desc
-|-|-
-| 200 | Data from restaurant returned
-| 404 | There is no productDTOS in restaurant
+| code | desc                               |
+|------|------------------------------------|
+| 200  | Data from restaurant returned      |
+| 404  | There is no products in restaurant |
+
 ----
 
-## Find restaurant productDTOS by categoryDTO
+### Find restaurant products by category
 
-'GET' ondoor/restaurant/productDTOS?categoryDTO={find productDTOS by categoryDTO}
+`GET` /ondoor/restaurant/products?category={find products by category}
 
-| Attribute | type | mandatory | desc
-|-------|------|:-------------:|---
-|product_category | String | yes | Will search for the product contains that contains at the restaurants by categoryDTO
+| Attribute        | type   | mandatory | desc                                                                              |
+|------------------|--------|:---------:|-----------------------------------------------------------------------------------|
+| product_category | String |    yes    | Will search for the product contains that contains at the restaurants by category |
 
 **Response body example**
 
 ```js
 [
   {
-    "categoryDTO": "Entradas",
-    "productDTOS": 
+    "category": "Entradas",
+    "products": 
     [
       {
         "id": 1,
@@ -341,21 +345,22 @@ An API to manage the OnDoor delivery app.
 ```
 **HTTP responses**
 
-| code | desc
-|-|-
-| 200 | Producs data returned
-| 404 | There is no productDTOS in that categoryDTO
+| code | desc                                  |
+|------|---------------------------------------|
+| 200  | Producs data returned                 |
+| 404  | There is no products in that category |
+
 ----
 
 # Cart Service
 
-## Add productDTOS in customer cartDTO by productDTOS id
+### Add products in customer cart by products id
 
-'POST' ondoor/cartDTO/{customer_id}/productDTOS/add
+`POST` /ondoor/cart/{customer_id}/products/add
 
-| Attribute | type | mandatory | desc
-|-------|------|:-------------:|---
-|product_ids | List | yes | Will find the productDTOS in data bank and add they in the customer cartDTO
+| Attribute   | type | mandatory | desc                                                                 |
+|-------------|------|:---------:|----------------------------------------------------------------------|
+| product_ids | List |    yes    | Will find the products in database and add they in the customer cart |
 
 ## Request body example
 
@@ -372,15 +377,16 @@ An API to manage the OnDoor delivery app.
 ````
 **HTTP responses**
 
-| code | desc
-|-|-
-| 201 | Producs addedd to customer cartDTO
-| 400 | Wrong data format
+| code | desc                            |
+|------|---------------------------------|
+| 201  | Producs addedd to customer cart |
+| 400  | Wrong data format               |
+
 ----
 
-## Find all productDTOS in customer cartDTO
+### Find all products in customer cart
 
-'GET' ondoor/cartDTO/{customer_id}/productDTOS
+`GET` /ondoor/cart/{customer_id}/products
 
 **Response body example**
 
@@ -411,29 +417,31 @@ An API to manage the OnDoor delivery app.
 ````
 **HTTP responses**
 
-| code | desc
-|-|-
-| 200 | Producs returned
-| 404 | 
+| code | desc             |
+|------|------------------|
+| 200  | Producs returned |
+| 404  |                  |
+
 ----
 
-## Delete productDTOS by id in customer cartDTO
+### Delete products by id in customer cart
 
-'DELETE' ondoor/cartDTO/{customer_id}/productDTOS/{product_id}/del
+`DELETE` /ondoor/cart/{customer_id}/products/{product_id}/del
 
 **HTTP responses**
 
-| code | desc
-|-|-
-| 204 | Product deleted
-| 404 | There is no product with given id
+| code | desc                              |
+|------|-----------------------------------|
+| 204  | Product deleted                   |
+| 404  | There is no product with given id |
+
 ----
 
 # Order Service
 
-## Create order
+### Create order
 
-'POST' ondoor/order/{customer_id}
+`POST` /ondoor/order/{customer_id}
 
 **Request body example**
 
@@ -446,7 +454,7 @@ An API to manage the OnDoor delivery app.
     "id": 456,
     "name": "João da Silva",
     "email": "joao.silva@example.com",
-    "addressDTO": {
+    "address": {
       "street": "Rua dos Bobos",
       "number": "0",
       "city": "São Paulo",
@@ -457,7 +465,7 @@ An API to manage the OnDoor delivery app.
   },
   "payment_method": "credit_card",
   "total_amount": 35.75,
-  "productDTOS": [
+  "products": [
     {
       "id": 1,
       "name": "Pizza de Calabresa",
@@ -488,9 +496,9 @@ An API to manage the OnDoor delivery app.
 
 **HTTP responses**
 
-| code | desc
-|-|-
-| 201 | Order created
-| 400 | Bad data given
+| code | desc           |
+|------|----------------|
+| 201  | Order created  |
+| 400  | Bad data given |
 
 ----
