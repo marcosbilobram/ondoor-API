@@ -3,7 +3,7 @@ package br.com.fiap.Ondoor.controllers;
 import br.com.fiap.Ondoor.entities.Credential;
 import br.com.fiap.Ondoor.entities.User;
 import br.com.fiap.Ondoor.repositories.UserRepository;
-import br.com.fiap.Ondoor.services.AuthenticationService;
+import br.com.fiap.Ondoor.services.TokenService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,6 +31,9 @@ public class UserController {
     @Autowired
     private PasswordEncoder encoder;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/signUp")
     public ResponseEntity<User> registrar(@RequestBody @Valid User user){
         user.setPassword(encoder.encode(user.getPassword()));
@@ -42,7 +44,8 @@ public class UserController {
     @PostMapping("/api/login")
     public ResponseEntity<Object> login(@RequestBody @Valid Credential credential){
         manager.authenticate(credential.toAuthentication());
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken(credential);
+        return ResponseEntity.ok(token);
     }
 
     @GetMapping
