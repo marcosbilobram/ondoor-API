@@ -1,13 +1,17 @@
 package br.com.fiap.Ondoor.controllers;
 
+import br.com.fiap.Ondoor.entities.Credential;
 import br.com.fiap.Ondoor.entities.User;
 import br.com.fiap.Ondoor.repositories.UserRepository;
+import br.com.fiap.Ondoor.services.AuthenticationService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,7 +24,26 @@ public class UserController {
     Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
-    UserRepository repo;
+    private UserRepository repo;
+
+    @Autowired
+    private AuthenticationManager manager;
+
+    @Autowired
+    private PasswordEncoder encoder;
+
+    @PostMapping("/signUp")
+    public ResponseEntity<User> registrar(@RequestBody @Valid User user){
+        user.setPassword(encoder.encode(user.getPassword()));
+        repo.save(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("/api/login")
+    public ResponseEntity<Object> login(@RequestBody @Valid Credential credential){
+        manager.authenticate(credential.toAuthentication());
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
