@@ -1,6 +1,7 @@
 package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Credential;
+import br.com.fiap.Ondoor.entities.Restaurant;
 import br.com.fiap.Ondoor.entities.User;
 import br.com.fiap.Ondoor.repositories.UserRepository;
 import br.com.fiap.Ondoor.services.TokenService;
@@ -8,6 +9,9 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,22 +39,22 @@ public class UserController {
     private TokenService tokenService;
 
     @PostMapping("/signUp")
-    public ResponseEntity<User> registrar(@RequestBody @Valid User user){
+    public ResponseEntity<User> registrar(@RequestBody @Valid User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         repo.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
     @PostMapping("/api/login")
-    public ResponseEntity<Object> login(@RequestBody @Valid Credential credential){
+    public ResponseEntity<Object> login(@RequestBody @Valid Credential credential) {
         manager.authenticate(credential.toAuthentication());
         var token = tokenService.generateToken(credential);
         return ResponseEntity.ok(token);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        return ResponseEntity.ok().body(repo.findAll());
+    public Page<User> findAll(@PageableDefault(size = 5) Pageable pageable) {
+        return repo.findAll(pageable);
     }
 
     @GetMapping("/{id}")

@@ -2,11 +2,15 @@ package br.com.fiap.Ondoor.controllers;
 
 import br.com.fiap.Ondoor.entities.Order;
 import br.com.fiap.Ondoor.entities.Order;
+import br.com.fiap.Ondoor.entities.Restaurant;
 import br.com.fiap.Ondoor.repositories.OrderRepository;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +30,8 @@ public class OrderController {
     OrderRepository repo;
 
     @GetMapping
-    public ResponseEntity<List<Order>> findAll() {
-        return ResponseEntity.ok().body(repo.findAll());
+    public Page<Order> findAll(@PageableDefault(size = 5) Pageable pageable) {
+        return repo.findAll(pageable);
     }
 
     @GetMapping("/{id}")
